@@ -22,8 +22,11 @@ def train(epoch, loader, model, optimizer, device):
         aux1, output = model(img)
         print("1/////////////////////////////")
         print(len(output))
+        if (len(output) == 0):
+            continue
+        
         print("/////////////////////////////")
-        output = output[0]
+        #output = output[0]
         print("2/////////////////////////////")
         print(len(output))
         print("/////////////////////////////")
