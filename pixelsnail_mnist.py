@@ -51,7 +51,7 @@ if __name__ == '__main__':
     loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
 
     model = PixelSNAIL([28, 28], 256, 128, 5, 2, 4, 128)
-    model.aux_logits=False
+    
     model = model.to(device)
 
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
