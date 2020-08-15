@@ -19,12 +19,11 @@ def train(epoch, loader, model, optimizer, device):
         img = img.to(device)
 
         #out = model(img)
-        aux1, aux2, output = model(img)     
-        loss1 = criterion(outputs, target)
-        loss2 = criterion(aux1, target)
-        loss3 = criterion(aux2, target)
-        loss = loss1 + 0.4*(loss2+loss3)
-        loss = criterion(out, img)
+        aux1, output = model(img)     
+        loss1 = criterion(output, img)
+        loss2 = criterion(aux1, img)
+        loss = loss1 + 0.4*(loss2)
+        #loss = criterion(out, img)
         loss.backward()
 
         optimizer.step()
