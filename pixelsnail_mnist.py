@@ -20,8 +20,9 @@ def train(epoch, loader, model, optimizer, device):
 
         #out = model(img)
         aux1, output = model(img)
-        
+        print("/////////////////////////////")
         print(len(output))
+        print("/////////////////////////////")
         loss1 = criterion(output, img)
         loss2 = criterion(aux1, img)
         loss = loss1 + 0.4*(loss2)
