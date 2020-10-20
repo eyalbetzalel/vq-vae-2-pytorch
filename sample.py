@@ -36,7 +36,7 @@ def load_model(model, checkpoint, device):
 
     elif model == 'pixelsnail_top':
         model = PixelSNAIL(
-            [28, 28],
+            [32, 32],
             512,
             args.channel,
             5,
@@ -77,25 +77,24 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--batch', type=int, default=8)
-    #parser.add_argument('--vqvae', type=str)
+    parser.add_argument('--vqvae', type=str)
     parser.add_argument('--top', type=str)
-    #parser.add_argument('--bottom', type=str)
+    parser.add_argument('--bottom', type=str)
     parser.add_argument('--temp', type=float, default=1.0)
     parser.add_argument('filename', type=str)
 
     args = parser.parse_args()
 
-    #model_vqvae = load_model('vqvae', args.vqvae, device)
+    model_vqvae = load_model('vqvae', args.vqvae, device)
     model_top = load_model('pixelsnail_top', args.top, device)
-    #model_bottom = load_model('pixelsnail_bottom', args.bottom, device)
+    model_bottom = load_model('pixelsnail_bottom', args.bottom, device)
 
-    top_sample = sample_model(model_top, device, args.batch, [28, 28], args.temp)
-    decoded_sample = top_sample.clamp(-1, 1) # Eyal added this - delete after using
-    #bottom_sample = sample_model(
-    #    model_bottom, device, args.batch, [64, 64], args.temp, condition=top_sample
-    #)
+    top_sample = sample_model(model_top, device, args.batch, [32, 32], args.temp)
+    bottom_sample = sample_model(
+        model_bottom, device, args.batch, [64, 64], args.temp, condition=top_sample
+    )
 
-    #decoded_sample = model_vqvae.decode_code(top_sample, bottom_sample)
-    #decoded_sample = decoded_sample.clamp(-1, 1)
+    decoded_sample = model_vqvae.decode_code(top_sample, bottom_sample)
+    decoded_sample = decoded_sample.clamp(-1, 1)
 
     save_image(decoded_sample, args.filename, normalize=True, range=(-1, 1))
