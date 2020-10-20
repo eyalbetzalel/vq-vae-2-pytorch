@@ -36,7 +36,7 @@ def load_model(model, checkpoint, device):
 
     elif model == 'pixelsnail_top':
         model = PixelSNAIL(
-            [32, 32],
+            [28, 28],
             512,
             args.channel,
             5,
