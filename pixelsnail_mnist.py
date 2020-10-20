@@ -52,7 +52,7 @@ if __name__ == '__main__':
     epoch = 10
 
     dataset = datasets.MNIST('.', transform=PixelTransform(), download=True)
-    loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
+    loader = DataLoader(dataset, batch_size=8, shuffle=True, num_workers=4)
 
     model = PixelSNAIL([28, 28], 256, 128, 5, 2, 4, 128)
     
